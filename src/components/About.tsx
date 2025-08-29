@@ -1,21 +1,90 @@
+'use client'
+import { motion,useInView } from 'framer-motion';
+import { skills } from '@/data/skills';
+import SkillBadge from './SkillBadge';
 
 
-function about() {
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5
+    }
+  }
+};
+
+export default function About() {
   return (
-    <div id="about" className="mt-10 flex flex-col items-center justify-center space-y-4">
-      <h1>About Me</h1>
-      <p className="text-gray-600 max-w-2xl text-center">
-        I\u2019m a developer passionate about crafting accessible, pixel-perfect user interfaces that blend thoughtful design with robust engineering.<br/> My favorite work lies at the intersection of design and development, creating experiences that not only look great but are meticulously built for performance and usability.
+    <motion.section
+      id = "about"
+      initial="hidden"
+      animate="visible"
+      variants={containerVariants}
+      className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12"
+    >
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+        {/* About Me Section */}
+        <motion.div 
+          variants={itemVariants}
+          className="lg:w-1/2"
+        >
+          <motion.h2 
+            variants={itemVariants}
+            className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800 dark:text-white"
+          >
+            About Me
+          </motion.h2>
+          <motion.p 
+            variants={itemVariants}
+            className="text-base sm:text-lg leading-relaxed text-gray-600 dark:text-gray-300"
+          >
+            I'm Aspiring Backend developer with a focus on creating modern, responsive web applications. I love exploring new technologies and continuously improving my skills to deliver the best solutions. My goal is to build applications that not only meet user needs but also provide an exceptional user experience.
+          </motion.p>
+        </motion.div>
 
-Currently, I'm a Senior Front-End Engineer at Klaviyo, specializing in accessibility. <br /> I contribute to the creation and maintenance of UI components that power Klaviyo\u2019s frontend, ensuring our platform meets web accessibility standards and best practices to deliver an inclusive user experience.
-
-In the past, I've had the opportunity to develop software across a variety of settings \u2014 from advertising agencies and large corporations to start-ups <br/> and small digital product studios. Additionally, I also released a comprehensive video course a few years ago, <br/> guiding learners through building a web app with the Spotify API.
-
-In my spare time, I\u2019m usually climbing, reading, <br/>hanging out with my wife and two cats, or running around Hyrule searching for Korok seedsKorok seeds
-      </p>
-      
-    </div>
-  )
+        {/* Skills Section */}
+        <motion.div 
+          variants={itemVariants}
+          className="lg:w-1/2"
+        >
+          <motion.h3 
+            variants={itemVariants}
+            className="text-xl sm:text-2xl font-semibold mb-6 text-gray-800 dark:text-white"
+          >
+            Skills
+          </motion.h3>
+          <motion.div 
+            variants={containerVariants}
+            className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-3 sm:gap-4"
+          >
+            {skills.map((skill, index) => (
+              <motion.div
+                key={skill.name}
+                variants={itemVariants}
+                custom={index}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <SkillBadge name={skill.name} icon={skill.icon} color={skill.color} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.div>
+      </div>
+    </motion.section>
+  );
 }
-
-export default about
