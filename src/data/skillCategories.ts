@@ -12,9 +12,9 @@ export const skillCategories = [
   {
     title: "Backend",
     skills: [
-      { name: "Node.js", level: 85 },
-      { name: "Python", level: 80 },
-      { name: "Laravel & PHP", level: 75 },
+      { name: "Python", level: 85 },
+      { name: "Laravel & PHP", level: 80 },
+      { name: "Node.js", level: 75 },
       { name: "Mysql", level: 70 },
       { name: "MongoDB", level: 65 },
     ],

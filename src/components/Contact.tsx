@@ -14,14 +14,32 @@ export default function Contact() {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [status,setStatus] = useState<string>("");
+
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted", formData);
-    setFormData({
-      name: "test",
-      email: "test@gmail.com",
-      message: "hello i like it",
-    });
+    setStatus('Sending...');
+
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        setStatus('Email sent successfully!');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus(`Error: ${result.error}`);
+      }
+    } catch (error) {
+      setStatus('Error: Failed to send email.');
+    }
   };
 
   const handleChange = (
