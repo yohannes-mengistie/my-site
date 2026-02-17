@@ -24,9 +24,8 @@ export const skillCategories = [
     skills: [
       { name: "Git", level: 90 },
       { name: "Docker", level: 70 },
-      { name: "AWS", level: 65 },
       { name: "Figma", level: 80 },
-      { name: "Jest", level: 75 },
+      { name: "Linux", level: 75 },
     ],
   },
 ]
