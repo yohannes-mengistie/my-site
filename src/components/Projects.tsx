@@ -3,14 +3,14 @@ import { Button } from "@/components/ui/button"
 import { ExternalLink, Github } from "lucide-react"
 
 const projects = [
-  {
-    title: "Prompt-Share",
-    description: "A full-stack prompt share solution built with Next.js, TypeScript, and Stripe integration.",
-    image: "/uploads/prompt-share.png",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Stripe"],
-    liveUrl: "#",
-    githubUrl: "https://github.com/yohannes-mengistie/share-prompt",
-  },
+{
+  title: "Prompt-Share",
+  description: "Designed and implemented a web-based prompt sharing platform enabling users to publish, browse, and manage AI prompts. Focused on clean UI/UX, scalable architecture, and efficient content management.",
+  image: "/uploads/prompt.png",
+  technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Stripe"],
+  liveUrl: "https://share-prompt-two-zeta.vercel.app",
+  githubUrl: "https://github.com/yohannes-mengistie/share-prompt",
+},
   {
     title: "Employee Management App",
     description: "A collaborative employee management application with real-time updates and team features.",
@@ -35,6 +35,22 @@ const projects = [
     liveUrl: "#",
     githubUrl: "https://github.com/yohannes-mengistie/my-site",
   },
+{
+  title: "ERP System",
+  description: "Designed and implemented a modular ERP system using the Laravel framework, featuring authentication, role-based authorization, CRUD operations, and database-driven business workflows. Focused on clean architecture, security, and performance optimization.",
+  image: "/uploads/erp.jpg",
+  technologies: ["react.js", "Tailwind CSS", "Framer Motion", "PHP" , "LARAVEL"],
+  liveUrl: "#",
+  githubUrl: "https://github.com/yohannes-mengistie/erp-system",
+},
+{
+  title: "LiveFlow",
+  description: "Built a chat platform that connects users through random matchmaking, allowing instant conversations with new people. The project emphasizes real-time communication, efficient user pairing, and scalable system design.",
+  image: "/uploads/liveflow.jpg",
+  technologies: ["react.js", "Tailwind CSS", "Framer Motion", "PHP" , "LARAVEL"],
+  liveUrl: "#",
+  githubUrl: "https://github.com/yohannes-mengistie/LiveFlow",
+},
 ]
 
 export default function Projects() {

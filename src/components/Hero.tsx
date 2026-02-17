@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
 
 export default function HeroSection() {
   return (
@@ -8,14 +8,37 @@ export default function HeroSection() {
       className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-background via-muted/50 to-accent/10"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
-            Hi, I'm <span className="text-accent">Yohannes M.</span>
+        <div className="max-w-4xl mx-auto mt-20">
+          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight tracking-tight">
+            Hi, I'm{" "}
+            <span className="text-accent">Yohannes Mengistie Kindu</span>
           </h1>
-          <p className="text-xl sm:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+
+    <p className="
+  text-lg sm:text-xl lg:text-2xl
+  text-muted-foreground
+  max-w-2xl
+  mx-auto
+  mb-10
+  leading-loose
+  text-left lg:text-justify
+  font-light
+  px-4 sm:px-0
+"
+
+          >
+            I am a BSc student in Electrical and Computer Engineering (Computer Engineering) at Addis
+            Ababa University, specializing in backend development. I have a
+            strong foundation in programming and a passion for designing
+            efficient, scalable, and reliable backend systems. My goal is to
+            build robust applications that foster innovation and deliver
+            high-quality user experiences.
+          </p>
+
+          {/* <p className="text-xl sm:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
             A passionate Backend developer creating modern, responsive web applications , fast and scalable backend solutions with cutting-edge
             technologies.
-          </p>
+          </p> */}
 
           {/* Social Links */}
           <div className="flex justify-center space-x-6 mb-12">
@@ -48,7 +71,10 @@ export default function HeroSection() {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground">
+            <Button
+              size="lg"
+              className="bg-accent hover:bg-accent/90 text-accent-foreground"
+            >
               <a href="#projects">View My Work</a>
             </Button>
             <Button
@@ -67,5 +93,5 @@ export default function HeroSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
