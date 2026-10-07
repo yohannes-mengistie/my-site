@@ -3,10 +3,10 @@ import { skills } from "@/data/skills";
 import { site } from "@/data/site";
 
 const stats = [
-  { label: "Focus", value: "Backend + product" },
-  { label: "Base", value: "Addis Ababa" },
-  { label: "Mode", value: "Ship, then refine" },
-  { label: "Next", value: "Teams with real systems" },
+  { label: "Degree", value: "Comp. Engineering · AAU" },
+  { label: "GPA", value: "3.93 / 4.0" },
+  { label: "Program", value: "A2SV · Flutter & CP" },
+  { label: "Ubuntu", value: "3+ years daily use" },
 ];
 
 export default function About() {
@@ -21,15 +21,20 @@ export default function About() {
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-5 text-lg leading-relaxed text-muted-foreground">
             <p>
-              I am {site.name}, a fifth-year Computer Engineering student at Addis Ababa
-              University. I like the layer most portfolios skip: APIs, data models, auth,
-              and the path from a messy real-world problem to something people can actually
-              use.
+              I am {site.name}, a Computer Engineering graduate from Addis Ababa
+              University (GPA 3.93/4.0) with a strong foundation in algorithms, data
+              structures, and mobile development. I completed a one-year intensive
+              software engineering program at A2SV (Africa to Silicon Valley), focused
+              on Android development with Flutter alongside competitive programming and
+              rigorous problem-solving.
             </p>
             <p>
-              Hardware–software overlap is part of how I think — IoT, automation, and
-              backends that sit behind a calm interface. I write for reliability, then
-              make the surface feel considered.
+              I build scalable mobile applications on MVVM architecture and RESTful
+              APIs. I bring over three years of daily hands-on Ubuntu experience
+              across local hosting, server management, and fullstack deployment. I
+              decompose complex problems, write clean and well-tested code,
+              troubleshoot independently in Linux environments, and communicate
+              technical reasoning clearly in writing.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-3">

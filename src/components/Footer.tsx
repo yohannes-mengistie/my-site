@@ -20,7 +20,10 @@ export default function Footer() {
               <ul className="space-y-2">
                 {navItems.map((item) => (
                   <li key={item.href}>
-                    <a href={item.href} className="text-sm text-muted-foreground hover:text-primary">
+                    <a
+                      href={item.href}
+                      className="text-sm text-muted-foreground hover:text-primary"
+                    >
                       {item.label}
                     </a>
                   </li>
@@ -32,7 +35,12 @@ export default function Footer() {
                 Connect
               </p>
               <div className="flex gap-4">
-                <a href={site.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <a
+                  href={site.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub"
+                >
                   <Github size={20} />
                 </a>
                 <a
@@ -50,9 +58,11 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <p className="mt-10 text-sm text-muted-foreground">
-          © {year} {site.name}. Designed as a product, not a template.
-        </p>
+        <div className="flex justify-center items-center h-screen ">
+          <p className="mt-10 text-sm text-muted-foreground">
+            © {year} {site.name}. Designed as a product, not a template.
+          </p>
+        </div>
       </div>
     </footer>
   );
