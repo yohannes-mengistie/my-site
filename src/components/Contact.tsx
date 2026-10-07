@@ -1,180 +1,165 @@
 "use client";
 
 import { useState } from "react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, MapPin, Phone } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
+import { site } from "@/data/site";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
+    company: "",
   });
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [error, setError] = useState("");
 
-  const [status,setStatus] = useState<string>("");
-
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setStatus('Sending...');
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (formData.company) return;
+    setStatus("sending");
+    setError("");
 
     try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
       });
-
       const result = await response.json();
       if (response.ok) {
-        setStatus('Email sent successfully!');
-        setFormData({ name: '', email: '', message: '' });
+        setStatus("sent");
+        setFormData({ name: "", email: "", message: "", company: "" });
       } else {
-        setStatus(`Error: ${result.error}`);
+        setStatus("error");
+        setError(result.error ?? "Could not send the message.");
       }
-    } catch (error) {
-      setStatus('Error: Failed to send email.');
+    } catch {
+      setStatus("error");
+      setError("Network error. Email me directly instead.");
     }
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   return (
-    <section id="contact" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto ">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
-              Get In Touch
-            </h2>
-            <p className="text-xl text-gray-500 max-w-2xl mx-auto">
-              I'm always interested in new opportunity and excited projects.
-              Let's disccuss how we can work together!
-            </p>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="space-y-6">
-              <Card className="bg-card border-border">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="flex-shrink-0">
-                      <Mail className="w-6 h-6 text-accent" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-card-foreground">
-                        Email
-                      </h3>
-                      <p className="text-muted-foreground">
-                        yohannesmengistie634@gmail.com
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-card border-border">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="flex-shrink-0">
-                      <Phone className="w-6 h-6 text-accent" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-card-foreground">
-                        Phone
-                      </h3>
-                      <p className="text-muted-foreground">+251-962-860754</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card className="bg-card border-border">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="flex-shrink-0">
-                      <MapPin className="w-6 h-6 text-accent" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-card-foreground">
-                        Location
-                      </h3>
-                      <p className="text-muted-foreground">Ethiopia, Addis Ababa</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            <div className="lg:col-span-2">
-              <Card className="bg-card border-border">
-                <CardHeader>
-                  <CardTitle className="text-card-foreground">Send me a message</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleSubmit} className="space-y-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-card-foreground mb-2">
-                          Name
-                        </label>
-                        <Input
-                          type="text"
-                          id="name"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          required
-                          className="bg-input border-border"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-card-foreground mb-2">
-                          Email
-                        </label>
-                        <Input
-                          type="email"
-                          id="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
-                          className="bg-input border-border"
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-card-foreground mb-2">
-                        Message
-                      </label>
-                      <Textarea
-                        id="message"
-                        name="message"
-                        rows={6}
-                        value={formData.message}
-                        onChange={handleChange}
-                        required
-                        className="bg-input border-border"
-                      />
-                    </div>
-                    <Button type="submit" className="w-full bg-blue-600 hover:bg-accent/90 text-accent-foreground">
-                      Send Message
-                    </Button>
-                  </form>
-                </CardContent>
-              </Card>
+    <section id="contact" className="px-4 py-20 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          index="05"
+          eyebrow="Contact"
+          title="If the work fits, write."
+          description="Internships, freelance, and full-time systems work. I read every message."
+        />
+        <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+          <div className="space-y-4">
+            <a
+              href={`mailto:${site.email}`}
+              className="flex items-center gap-4 rounded-3xl border border-border bg-card/70 p-5 hover:border-primary/40"
+            >
+              <Mail className="text-primary" size={20} />
+              <div>
+                <p className="text-sm text-muted-foreground">Email</p>
+                <p className="font-medium">{site.email}</p>
+              </div>
+            </a>
+            <a
+              href={`tel:${site.phone.replace(/\s/g, "")}`}
+              className="flex items-center gap-4 rounded-3xl border border-border bg-card/70 p-5 hover:border-primary/40"
+            >
+              <Phone className="text-primary" size={20} />
+              <div>
+                <p className="text-sm text-muted-foreground">Phone</p>
+                <p className="font-medium">{site.phone}</p>
+              </div>
+            </a>
+            <div className="flex items-center gap-4 rounded-3xl border border-border bg-card/70 p-5">
+              <MapPin className="text-primary" size={20} />
+              <div>
+                <p className="text-sm text-muted-foreground">Location</p>
+                <p className="font-medium">{site.location}</p>
+              </div>
             </div>
           </div>
+
+          <form
+            onSubmit={handleSubmit}
+            className="rounded-[1.75rem] border border-border bg-card/70 p-6 sm:p-8"
+          >
+            <div className="hidden" aria-hidden>
+              <label htmlFor="company">Company</label>
+              <input
+                id="company"
+                name="company"
+                tabIndex={-1}
+                autoComplete="off"
+                value={formData.company}
+                onChange={(event) =>
+                  setFormData({ ...formData, company: event.target.value })
+                }
+              />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="block text-sm">
+                Name
+                <Input
+                  name="name"
+                  required
+                  value={formData.name}
+                  onChange={(event) =>
+                    setFormData({ ...formData, name: event.target.value })
+                  }
+                  className="mt-2 h-11 rounded-2xl bg-background"
+                />
+              </label>
+              <label className="block text-sm">
+                Email
+                <Input
+                  type="email"
+                  name="email"
+                  required
+                  value={formData.email}
+                  onChange={(event) =>
+                    setFormData({ ...formData, email: event.target.value })
+                  }
+                  className="mt-2 h-11 rounded-2xl bg-background"
+                />
+              </label>
+            </div>
+            <label className="mt-4 block text-sm">
+              Message
+              <Textarea
+                name="message"
+                required
+                rows={6}
+                value={formData.message}
+                onChange={(event) =>
+                  setFormData({ ...formData, message: event.target.value })
+                }
+                className="mt-2 rounded-2xl bg-background"
+                placeholder="What are you building, and how should I help?"
+              />
+            </label>
+            <Button
+              type="submit"
+              disabled={status === "sending"}
+              className="mt-6 h-11 w-full rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
+            >
+              {status === "sending" ? "Sending…" : "Send message"}
+            </Button>
+            {status === "sent" ? (
+              <p className="mt-3 text-sm text-primary">Sent. I’ll get back to you.</p>
+            ) : null}
+            {status === "error" ? (
+              <p className="mt-3 text-sm text-destructive">{error}</p>
+            ) : null}
+          </form>
         </div>
       </div>
     </section>

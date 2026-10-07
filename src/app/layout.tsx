@@ -1,27 +1,24 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Outfit, Syne } from "next/font/google";
+import AmbientBackground from "@/components/AmbientBackground";
+import CustomCursor from "@/components/CustomCursor";
+import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import CursorEvent from "@/components/CursorEvent";
-import { Playfair_Display,Source_Sans_3 as Source_Sans_Pro } from "next/font/google";
+import ThemeProvider from "@/components/ThemeProvider";
+import { site } from "@/data/site";
 import "./globals.css";
 
-
-const playfairDisplay = Playfair_Display({
-  variable: "--font-heading",
-  display: "swap",
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
+  display: "swap",
+  weight: ["500", "600", "700", "800"],
 });
 
-const sourceSansPro = Source_Sans_Pro({
-  variable: "--font-body",
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
   display: "swap",
-  subsets: ["latin"],
-  weight:['400','600','700']
-});
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
 });
 
 const geistMono = Geist_Mono({
@@ -30,8 +27,23 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Yohannes Mengistie | Software Developer",
-  description: "Portfolio of Yohannes Mengistie",
+  title: `${site.name} · ${site.title}`,
+  description: `${site.summary} ${site.tagline}`,
+  keywords: [
+    "Yohannes Mengistie",
+    "Software Engineer",
+    "Backend Developer",
+    "Next.js",
+    "Laravel",
+    "Addis Ababa",
+  ],
+  authors: [{ name: site.name }],
+  openGraph: {
+    title: `${site.name} · ${site.title}`,
+    description: site.tagline,
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 export default function RootLayout({
@@ -40,14 +52,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body
-        className={"antialiased"}
+        className={`${syne.variable} ${outfit.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-        <CursorEvent />
-        {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(localStorage.getItem('ym-theme')==='light')document.documentElement.classList.remove('dark')}catch(e){}",
+          }}
+        />
+        <ThemeProvider>
+          <AmbientBackground />
+          <CustomCursor />
+          <Navbar />
+          {children}
+          <Footer />
+        </ThemeProvider>
       </body>
     </html>
   );

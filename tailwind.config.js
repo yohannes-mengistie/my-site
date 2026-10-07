@@ -7,6 +7,11 @@ module.exports = {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			sans: ["var(--font-outfit)", "system-ui", "sans-serif"],
+  			display: ["var(--font-syne)", "var(--font-outfit)", "sans-serif"],
+  			mono: ["var(--font-geist-mono)", "ui-monospace", "monospace"],
+  		},
   		borderColor: {
   			DEFAULT: 'var(--border)'
   		},

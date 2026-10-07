@@ -1,115 +1,180 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { ExternalLink, Github } from "lucide-react"
+"use client";
 
-const projects = [
-{
-  title: "Prompt-Share",
-  description: "Designed and implemented a web-based prompt sharing platform enabling users to publish, browse, and manage AI prompts. Focused on clean UI/UX, scalable architecture, and efficient content management.",
-  image: "/uploads/prompt.png",
-  technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Stripe"],
-  liveUrl: "https://share-prompt-two-zeta.vercel.app",
-  githubUrl: "https://github.com/yohannes-mengistie/share-prompt",
-},
-  {
-    title: "Employee Management App",
-    description: "A collaborative employee management application with real-time updates and team features.",
-    image: "/uploads/employee.jpg",
-    technologies: ["Flutter","restApi", "firebase", "Dart"],
-    liveUrl: "#",
-    githubUrl: "https://github.com/yohannes-mengistie/2024-project-phase-mobile-tasks",
-  },
-  {
-    title: "Sun Farms",
-    description: "A responsive Ethiopian farm products listing website",
-    image: "/uploads/sun-farms.png",
-    technologies: ["wordpress", "Chart.js", "Elementor", "CSS Grid"],
-    liveUrl: "https://yohannes.zergaw.et/",
-    githubUrl: "#",
-  },
-  {
-    title: "Portfolio Website",
-    description: "A modern, responsive portfolio website showcasing projects and skills.",
-    image: "/uploads/portfolio.png",
-    technologies: ["Next.js", "Tailwind CSS", "Framer Motion", "Vercel"],
-    liveUrl: "#",
-    githubUrl: "https://github.com/yohannes-mengistie/my-site",
-  },
-{
-  title: "ERP System",
-  description: "Designed and implemented a modular ERP system using the Laravel framework, featuring authentication, role-based authorization, CRUD operations, and database-driven business workflows. Focused on clean architecture, security, and performance optimization.",
-  image: "/uploads/erp.jpg",
-  technologies: ["react.js", "Tailwind CSS", "Framer Motion", "PHP" , "LARAVEL"],
-  liveUrl: "#",
-  githubUrl: "https://github.com/yohannes-mengistie/erp-system",
-},
-{
-  title: "LiveFlow",
-  description: "Built a chat platform that connects users through random matchmaking, allowing instant conversations with new people. The project emphasizes real-time communication, efficient user pairing, and scalable system design.",
-  image: "/uploads/liveflow.jpg",
-  technologies: ["react.js", "Tailwind CSS", "Framer Motion", "PHP" , "LARAVEL"],
-  liveUrl: "#",
-  githubUrl: "https://github.com/yohannes-mengistie/LiveFlow",
-},
-]
+import { useEffect, useMemo, useState } from "react";
+import { ArrowUpRight, Github, X } from "lucide-react";
+import ProjectCover from "@/components/ProjectCover";
+import SectionHeading from "@/components/SectionHeading";
+import { projectCategories, projects, type Project } from "@/data/projects";
+import { cn } from "@/lib/utils";
 
 export default function Projects() {
+  const [filter, setFilter] = useState<(typeof projectCategories)[number]>("All");
+  const [active, setActive] = useState<Project | null>(null);
+
+  useEffect(() => {
+    if (!active) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setActive(null);
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [active]);
+
+  const visible = useMemo(
+    () =>
+      filter === "All"
+        ? projects
+        : projects.filter((project) => project.category === filter),
+    [filter]
+  );
+
   return (
-    <section id="projects" className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">Featured Projects</h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Here are some of my recent projects that showcase my skills and passion for creating exceptional digital
-            experiences.
-          </p>
+    <section id="work" className="px-4 py-20 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl">
+        <SectionHeading
+          index="01"
+          eyebrow="Selected work"
+          title="Projects with a point of view"
+          description="Filter by surface. Open a project for the story, stack, and links — not just a screenshot dump."
+        />
+
+        <div className="mb-8 flex flex-wrap gap-2">
+          {projectCategories.map((category) => (
+            <button
+              key={category}
+              type="button"
+              onClick={() => setFilter(category)}
+              className={cn(
+                "rounded-full border px-4 py-1.5 text-sm transition-colors",
+                filter === category
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground"
+              )}
+            >
+              {category}
+            </button>
+          ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {projects.map((project, index) => (
-            <Card key={index} className="group hover:shadow-lg transition-all duration-300 bg-card border-border">
-              <div className="relative overflow-hidden rounded-t-lg">
-                <img
-                  src={project.image || "/placeholder.svg"}
-                  alt={project.title}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-accent/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              </div>
-
-              <CardHeader>
-                <CardTitle className="text-card-foreground">{project.title}</CardTitle>
-                <CardDescription className="text-muted-foreground">{project.description}</CardDescription>
-              </CardHeader>
-
-              <CardContent>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies.map((tech, techIndex) => (
-                    <span key={techIndex} className="px-3 py-1 text-sm bg-accent/10 text-accent rounded-full">
-                      {tech}
+        <div className="grid gap-5 md:grid-cols-2">
+          {visible.map((project, index) => (
+            <article
+              key={project.slug}
+              className={cn(
+                "group overflow-hidden rounded-[1.75rem] border border-border bg-card/80 transition hover:-translate-y-1 hover:border-primary/40",
+                project.featured && index === 0 ? "md:col-span-2" : ""
+              )}
+            >
+              <button
+                type="button"
+                className="block w-full text-left"
+                onClick={() => setActive(project)}
+              >
+                <ProjectCover project={project} />
+                <div className="p-6">
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <h3 className="font-display text-2xl font-semibold">{project.title}</h3>
+                      <p className="mt-2 text-muted-foreground">{project.summary}</p>
+                    </div>
+                    <span className="mt-1 grid h-9 w-9 shrink-0 place-items-center rounded-full border border-border text-muted-foreground group-hover:border-primary group-hover:text-primary">
+                      <ArrowUpRight size={16} />
                     </span>
-                  ))}
+                  </div>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {project.technologies.slice(0, 4).map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-full bg-muted px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-muted-foreground"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-
-                <div className="flex gap-4">
-                  <Button variant="outline" size="sm" asChild>
-                    <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                      <ExternalLink size={16} className="mr-2" />
-                      Live Demo
-                    </a>
-                  </Button>
-                  <Button variant="outline" size="sm" asChild>
-                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                      <Github size={16} className="mr-2" />
-                      Code
-                    </a>
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+              </button>
+            </article>
           ))}
         </div>
       </div>
+
+      {active ? (
+        <div
+          className="fixed inset-0 z-[70] grid place-items-center bg-black/70 p-4 backdrop-blur-sm"
+          onClick={() => setActive(null)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-dialog-title"
+            className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[1.75rem] border border-border bg-background p-6 shadow-2xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mb-4 flex items-start justify-between gap-4">
+              <div>
+                <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-primary">
+                  {active.category} · {active.year}
+                </p>
+                <h3 id="project-dialog-title" className="mt-2 font-display text-3xl font-bold">
+                  {active.title}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActive(null)}
+                className="grid h-10 w-10 place-items-center rounded-full border border-border"
+                aria-label="Close project details"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            <p className="text-muted-foreground">{active.description}</p>
+            <ul className="mt-5 space-y-2 text-sm">
+              {active.highlights.map((item) => (
+                <li key={item} className="flex gap-2">
+                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {active.technologies.map((tech) => (
+                <span key={tech} className="rounded-full border border-border px-3 py-1 text-xs">
+                  {tech}
+                </span>
+              ))}
+            </div>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {active.liveUrl ? (
+                <a
+                  href={active.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
+                >
+                  Live site
+                  <ArrowUpRight size={14} />
+                </a>
+              ) : null}
+              {active.githubUrl ? (
+                <a
+                  href={active.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-semibold"
+                >
+                  <Github size={14} />
+                  Source
+                </a>
+              ) : null}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </section>
-  )
+  );
 }

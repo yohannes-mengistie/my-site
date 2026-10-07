@@ -1,96 +1,111 @@
-import { Button } from "@/components/ui/button";
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+"use client";
 
-export default function HeroSection() {
+import { useEffect, useState } from "react";
+import { ArrowDownRight, ArrowUpRight, Github, Linkedin, Mail } from "lucide-react";
+import { site } from "@/data/site";
+
+export default function Hero() {
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setRoleIndex((current) => (current + 1) % site.roles.length);
+    }, 2200);
+    return () => window.clearInterval(id);
+  }, []);
+
   return (
-    <section
-      id="home"
-      className="min-h-screen flex items-center justify-center relative bg-gradient-to-br from-background via-muted/50 to-accent/10"
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="max-w-4xl mx-auto mt-20">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight tracking-tight">
-            Hi, I'm{" "}
-            <span className="text-accent">Yohannes Mengistie Kindu</span>
-          </h1>
-
-    <p className="
-  text-lg sm:text-xl lg:text-2xl
-  text-muted-foreground
-  max-w-2xl
-  mx-auto
-  mb-10
-  leading-loose
-  text-left lg:text-justify
-  font-light
-  px-4 sm:px-0
-"
-
-          >
-            I am a BSc student in Electrical and Computer Engineering (Computer Engineering) at Addis
-            Ababa University, specializing in backend development. I have a
-            strong foundation in programming and a passion for designing
-            efficient, scalable, and reliable backend systems. My goal is to
-            build robust applications that foster innovation and deliver
-            high-quality user experiences.
+    <section id="home" className="relative min-h-screen px-4 pb-16 pt-28 sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
+        <div>
+          <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.22em] text-primary">
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-primary" />
+            {site.availability}
           </p>
-
-          {/* <p className="text-xl sm:text-2xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
-            A passionate Backend developer creating modern, responsive web applications , fast and scalable backend solutions with cutting-edge
-            technologies.
-          </p> */}
-
-          {/* Social Links */}
-          <div className="flex justify-center space-x-6 mb-12">
+          <h1 className="font-display text-4xl font-extrabold leading-[1.05] text-balance sm:text-6xl lg:text-7xl">
+            {site.name}
+            <span className="mt-3 block text-2xl font-semibold text-primary sm:text-4xl lg:text-5xl">
+              {site.roles[roleIndex]}
+            </span>
+          </h1>
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
+            {site.tagline}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
             <a
-              href="https://github.com/yohannes-mengistie"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-green-600 hover:text-accent transition-colors duration-200"
+              href="#work"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
             >
-              <Github size={24} />
-              <span className="sr-only">GitHub</span>
+              See selected work
+              <ArrowDownRight size={16} />
             </a>
             <a
-              href="https://www.linkedin.com/in/yohannes-mengistie?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-yello-100 hover:text-accent transition-colors duration-200"
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 text-sm font-semibold hover:border-primary/50"
             >
-              <Linkedin size={24} />
-              <span className="sr-only">LinkedIn</span>
-            </a>
-            <a
-              href="yohannesmengistie634@gmail.com"
-              className="text-red-600 hover:text-accent transition-colors duration-200"
-            >
-              <Mail size={24} />
-              <span className="sr-only">Email</span>
+              Start a conversation
             </a>
           </div>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Button
-              size="lg"
-              className="bg-accent hover:bg-accent/90 text-accent-foreground"
+          <div className="mt-10 flex items-center gap-4 text-muted-foreground">
+            <a
+              href={site.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary"
+              aria-label="GitHub"
             >
-              <a href="#projects">View My Work</a>
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-accent text-accent hover:bg-accent hover:text-accent-foreground bg-transparent"
+              <Github size={20} />
+            </a>
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-primary"
+              aria-label="LinkedIn"
             >
-              <a href="#contact">Get In Touch</a>
-            </Button>
-          </div>
-
-          {/* Scroll Indicator */}
-          <div className="animate-bounce">
-            <ArrowDown className="mx-auto text-muted-foreground" size={24} />
+              <Linkedin size={20} />
+            </a>
+            <a href={`mailto:${site.email}`} className="hover:text-primary" aria-label="Email">
+              <Mail size={20} />
+            </a>
+            <span className="hidden h-4 w-px bg-border sm:block" />
+            <span className="hidden font-mono text-xs sm:block">{site.location}</span>
           </div>
         </div>
+
+        <aside className="relative">
+          <div className="rounded-[2rem] border border-border bg-card/70 p-6 shadow-2xl shadow-black/20 backdrop-blur">
+            <div className="mb-6 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              <span>Now</span>
+              <span className="text-primary">online</span>
+            </div>
+            <dl className="space-y-5">
+              <div>
+                <dt className="text-xs uppercase tracking-widest text-muted-foreground">Building</dt>
+                <dd className="mt-1 text-lg font-display font-semibold">
+                  Reliable APIs and product surfaces
+                </dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-widest text-muted-foreground">Studying</dt>
+                <dd className="mt-1">Computer Engineering · AAU</dd>
+              </div>
+              <div>
+                <dt className="text-xs uppercase tracking-widest text-muted-foreground">Looking for</dt>
+                <dd className="mt-1">Teams that care about systems, not just screens</dd>
+              </div>
+            </dl>
+            <a
+              href={site.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-8 inline-flex items-center gap-2 text-sm text-primary"
+            >
+              GitHub
+              <ArrowUpRight size={14} />
+            </a>
+          </div>
+        </aside>
       </div>
     </section>
   );

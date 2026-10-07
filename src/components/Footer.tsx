@@ -1,59 +1,55 @@
-import {Github,Linkedin,Mail,Twitter} from 'lucide-react';
+import { Github, Linkedin, Mail } from "lucide-react";
+import { navItems, site } from "@/data/site";
 
-function Footer() {
-    const currentYear = new Date().getFullYear();
+export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className='bg-black border-t border-sidebar-border'>
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 py-12'>
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-8'>
-                <div>
-                    <h3 className='text-2xl font-bold text-sidebar-foreground mb-4'>Portfolio</h3>
-                    <p className='text-muted-foreground leading-relaxed'>Creating modern, responsive web applications with passion and precision.</p>
-                </div>
-                <div>
-                    <h4 className='text-lg font-semibold text-sidebar-foreground mb-4'>
-                        Quick Links
-                    </h4>
-                    <ul className='space-y-2'>
-                        {["Home" , "About" ,"Projects","Skills","Contact"].map((item) => (
-                            <li key={item}>
-                                <a href={`#${item.toLowerCase()}`} className='text-muted-foreground hover:text-purple-500 transition-colors duration-200'>
-                                    {item}
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                <div>
-                    <h4 className='text-lg font-semibold text-sidebar-foreground mb-4'>Connect</h4>
-                    <div className='flex space-x-4'>
-                        <a href="https://github.com/yohannes-mengistie" target='_blank' rel="noopener noreferrer" className='text-green-500 hover:text-purple-500 transition-colors duration-200' >
-                            <Github size={24} />
-                            <span className='sr-only'>Github</span>
-                        </a>
-                         <a href="https://www.linkedin.com/in/yohannes-mengistie?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target='_blank' rel="noopener noreferrer" className='text-green-500 hover:text-purple-500 transition-colors duration-200' >
-                            <Linkedin size={24} />
-                            <span className='sr-only'>Linkedin</span>
-                        </a>
-                         <a href="https://github.com/yohannes-mengistie" target='_blank' rel="noopener noreferrer" className='text-green-500 hover:text-purple-500 transition-colors duration-200' >
-                            <Twitter size={24} />
-                            <span className='sr-only'>Twitter</span>
-                        </a>
-                        <a href="yohannesmengistie634@gmail.com" target='_blank' rel="noopener noreferrer" className='text-green-500 hover:text-purple-500 transition-colors duration-200' >
-                            <Mail size={24} />
-                            <span className='sr-only'>Mail</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div className='border-t border-sidebar-border mt-8 pt-8 text-center'>
-                <p className='text-muted-foreground'>
-                    © {currentYear} Portfolio Designed and Developed by Yohannes Mengistie. Built with Next.js and deployed on Vercel.
-                </p>
-            </div>
+    <footer className="relative z-10 border-t border-border px-4 py-12 sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-3">
+        <div>
+          <p className="font-display text-2xl font-bold">{site.shortName}</p>
+          <p className="mt-3 max-w-sm text-sm text-muted-foreground">{site.tagline}</p>
         </div>
+        <div>
+          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+            On this page
+          </p>
+          <ul className="space-y-2">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                <a href={item.href} className="text-sm text-muted-foreground hover:text-primary">
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <p className="mb-3 font-mono text-[11px] uppercase tracking-[0.22em] text-muted-foreground">
+            Connect
+          </p>
+          <div className="flex gap-4">
+            <a href={site.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <Github size={20} />
+            </a>
+            <a
+              href={site.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <Linkedin size={20} />
+            </a>
+            <a href={`mailto:${site.email}`} aria-label="Email">
+              <Mail size={20} />
+            </a>
+          </div>
+        </div>
+      </div>
+      <p className="mx-auto mt-10 max-w-6xl text-sm text-muted-foreground">
+        © {year} {site.name}. Designed as a product, not a template.
+      </p>
     </footer>
-  )
+  );
 }
-
-export default Footer
