@@ -58,11 +58,9 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="flex justify-center items-center">
-          <p className="text-sm text-muted-foreground">
+          <p className="flex justify-center items-center text-sm text-muted-foreground">
             © {year} {site.name}. Designed as a product, not a template.
           </p>
-        </div>
       </div>
     </footer>
   );
