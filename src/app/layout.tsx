@@ -38,6 +38,11 @@ export const metadata: Metadata = {
     "Addis Ababa",
   ],
   authors: [{ name: site.name }],
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
   openGraph: {
     title: `${site.name} · ${site.title}`,
     description: site.tagline,

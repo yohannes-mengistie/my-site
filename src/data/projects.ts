@@ -74,18 +74,18 @@ export const projects: Project[] = [
     accent: "#f0abfc",
   },
   {
-    slug: "employee-app",
-    title: "Employee Management",
+    slug: "ecommerce-app",
+    title: "E-Commerce App",
     year: "2024",
     category: "Mobile",
     summary:
-      "Flutter app for teams: employee records, live updates, and day-to-day ops.",
+      "Flutter-based e-commerce app for managing product listings.",
     description:
-      "A collaborative employee management client built in Flutter, talking to REST APIs and Firebase. The work covered mobile UX, remote data, and team-oriented features rather than a static list screen.",
+      "A Flutter e-commerce app enabling users to create, view, update, and delete product listings with seamless navigation and smooth transition animations for an intuitive experience.",
     highlights: [
-      "Flutter client with REST + Firebase",
-      "Team-oriented flows, not a local-only CRUD toy",
-      "Built during structured mobile project phases",
+      "Create, view, update, and delete product listings",
+      "Seamless navigation across screens",
+      "Smooth transition animations enhancing user flow",
     ],
     technologies: ["Flutter", "Dart", "REST API", "Firebase"],
     githubUrl:
